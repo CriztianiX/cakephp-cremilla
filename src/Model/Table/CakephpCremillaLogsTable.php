@@ -37,6 +37,9 @@ class CakephpCremillaLogsTable extends Table
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');
+        $this->addBehavior('PlumSearch.Filterable');
+
+        $this->addFilter('type', ['className' => 'Value']);
     }
 
     /**
