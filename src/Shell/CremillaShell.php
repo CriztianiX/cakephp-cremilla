@@ -18,6 +18,7 @@ class CremillaShell extends QueuesadillaShell
         $logger = Log::engine($this->params['logger']);
         $engine = $this->getEngine($logger);
         $worker = $this->getWorker($engine, $logger);
+        $this->registerPid();
         $worker->work();
     }
 
@@ -39,5 +40,26 @@ class CremillaShell extends QueuesadillaShell
         });
 
         return $worker;
+    }
+
+    /**
+     * Register PID for current worker
+     * @return void
+     * 
+     */
+    private function registerPid()
+    {
+        /**
+         * ToDo
+         * Remove from here
+         */
+        $dirPids = TMP . 'cremilla' . DS . 'pids';
+        if(!is_dir($dirPids)) {
+            mkdir($dirPids, 0777, true);
+        }
+
+        $pid = getmypid();
+        $pidfile = $dirPids . DS . $pid . ".pid";
+        file_put_contents($pidfile, $pid);
     }
 }

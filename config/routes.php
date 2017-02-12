@@ -7,8 +7,11 @@ Router::plugin(
     'CriztianiX/Cremilla',
     ['path' => '/cremilla'],
     function (RouteBuilder $routes) {
-        $routes->connect('/', [
+        $routes->connect('/logs', [
             'controller' => 'Logs', 'action' => 'index', 'plugin' => 'CriztianiX/Cremilla' 
+        ]);
+        $routes->connect('/workers', [
+            'controller' => 'Workers', 'action' => 'index', 'plugin' => 'CriztianiX/Cremilla'
         ]);
     }
 );
