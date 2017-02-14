@@ -2,7 +2,7 @@
 namespace CriztianiX\Cremilla\Shell;
 use Cake\Datasource\ConnectionManager;
 use Josegonzalez\CakeQueuesadilla\Shell\QueuesadillaShell;
-use Cremilla\Log\Engine\CremillaLog;
+use CriztianiX\Cremilla\Log\Engine\CremillaLog;
 
 class CremillaShell extends QueuesadillaShell
 {

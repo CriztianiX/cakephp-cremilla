@@ -3,7 +3,7 @@ namespace CriztianiX\Cremilla\Queue;
 
 use josegonzalez\Queuesadilla\Queue as Queuer;
 use Josegonzalez\CakeQueuesadilla\Queue\Queue as JQueue;
-use Cremilla\Log\Engine\CremillaLog;
+use CriztianiX\Cremilla\Log\Engine\CremillaLog;
 
 class CremillaQueue extends JQueue
 {
