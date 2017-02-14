@@ -9,13 +9,13 @@ use Cake\Validation\Validator;
 /**
  * CakephpCremillaLogs Model
  *
- * @method \Cremilla\Model\Entity\CakephpCremillaLog get($primaryKey, $options = [])
- * @method \Cremilla\Model\Entity\CakephpCremillaLog newEntity($data = null, array $options = [])
- * @method \Cremilla\Model\Entity\CakephpCremillaLog[] newEntities(array $data, array $options = [])
- * @method \Cremilla\Model\Entity\CakephpCremillaLog|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \Cremilla\Model\Entity\CakephpCremillaLog patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \Cremilla\Model\Entity\CakephpCremillaLog[] patchEntities($entities, array $data, array $options = [])
- * @method \Cremilla\Model\Entity\CakephpCremillaLog findOrCreate($search, callable $callback = null, $options = [])
+ * @method \CriztianiX\Cremilla\Model\Entity\CakephpCremillaLog get($primaryKey, $options = [])
+ * @method \CriztianiX\Cremilla\Model\Entity\CakephpCremillaLog newEntity($data = null, array $options = [])
+ * @method \CriztianiX\Cremilla\Model\Entity\CakephpCremillaLog[] newEntities(array $data, array $options = [])
+ * @method \CriztianiX\Cremilla\Model\Entity\CakephpCremillaLog|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \CriztianiX\Cremilla\Model\Entity\CakephpCremillaLog patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \CriztianiX\Cremilla\Model\Entity\CakephpCremillaLog[] patchEntities($entities, array $data, array $options = [])
+ * @method \CriztianiX\Cremilla\Model\Entity\CakephpCremillaLog findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */

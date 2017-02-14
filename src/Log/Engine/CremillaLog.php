@@ -9,20 +9,21 @@ class CremillaLog extends BaseLog
     /**
      * Model object placeholder
      *
-     * @var \Cremilla\Model\Table\CakephpCremillaLogsTable
+     * @var \CriztianiX\Cremilla\Model\Table\CakephpCremillaLogsTable
      */
     public $Logs;
 
     public function __construct($options = [])
     {
         parent::__construct($options);
-        $this->Logs = TableRegistry::get('Cremilla.CakephpCremillaLogs');
+        $this->Logs = TableRegistry::get('Cremilla.CakephpCremillaLogs', [
+            'className' => 'CriztianiX\Cremilla\Model\Table\CakephpCremillaLogsTable'
+        ]);
     }
 
     public function log($level, $message, array $context = [])
     {
         $return = $this->Logs->log($level, $message, $context);
-        debug($return);
         return $return;
     }
 }
