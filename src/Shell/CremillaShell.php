@@ -1,8 +1,9 @@
 <?php
 namespace CriztianiX\Cremilla\Shell;
+
 use Cake\Datasource\ConnectionManager;
 use Josegonzalez\CakeQueuesadilla\Shell\QueuesadillaShell;
-use CriztianiX\Cremilla\Log\Engine\CremillaLog;
+use Cake\Log\Log;
 
 class CremillaShell extends QueuesadillaShell
 {
@@ -14,7 +15,7 @@ class CremillaShell extends QueuesadillaShell
      */
     public function main()
     {
-        $logger = new CremillaLog();
+        $logger = Log::engine($this->params['logger']);
         $engine = $this->getEngine($logger);
         $worker = $this->getWorker($engine, $logger);
         $worker->work();
