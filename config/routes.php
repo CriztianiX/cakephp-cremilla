@@ -4,9 +4,11 @@ use Cake\Routing\Router;
 use Cake\Routing\Route\DashedRoute;
 
 Router::plugin(
-    'Cremilla',
+    'CriztianiX/Cremilla',
     ['path' => '/cremilla'],
     function (RouteBuilder $routes) {
-        $routes->fallbacks(DashedRoute::class);
+        $routes->connect('/', [
+            'controller' => 'Logs', 'action' => 'index', 'plugin' => 'CriztianiX/Cremilla' 
+        ]);
     }
 );
