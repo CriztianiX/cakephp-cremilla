@@ -2,10 +2,8 @@
 namespace CriztianiX\Cremilla\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
 use CriztianiX\Cremilla\Worker\CremillaWorker;
-
-use Cake\Filesystem\Folder;
-
 
 class WorkersController extends AppController
 {
@@ -16,19 +14,11 @@ class WorkersController extends AppController
 
     public function index()
     {
-        // ToDo
-        // Only for test
-        $dirPids = TMP . 'cremilla' . DS . 'pids';
-        $dir = new Folder($dirPids, true, 0777);
+        $workersTable = TableRegistry::get('Cremilla.CakephpCremillaWorkers', [
+            'className' => 'CriztianiX\Cremilla\Model\Table\CakephpCremillaWorkersTable'
+        ]);
 
-        $pids = array_map(function($pid) {
-            $x = (int) str_replace(".pid", "", $pid);
-            return [ "pid" => $x, "status" => CremillaWorker::isAlive($x) ];
-        }, $dir->find('.*\.pid'));
-
-        debug($pids);
-
-        die;
-
+        $workers = $workersTable->find('all');
+        $this->set(compact('workers'));
     }
 }

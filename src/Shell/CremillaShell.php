@@ -1,9 +1,11 @@
 <?php
 namespace CriztianiX\Cremilla\Shell;
 
+use Cake\Database\Exception;
 use Cake\Datasource\ConnectionManager;
 use Josegonzalez\CakeQueuesadilla\Shell\QueuesadillaShell;
 use Cake\Log\Log;
+use Cake\ORM\TableRegistry;
 
 class CremillaShell extends QueuesadillaShell
 {
@@ -18,7 +20,7 @@ class CremillaShell extends QueuesadillaShell
         $logger = Log::engine($this->params['logger']);
         $engine = $this->getEngine($logger);
         $worker = $this->getWorker($engine, $logger);
-        $this->registerPid();
+        $this->registerWorker();
         $worker->work();
     }
 
@@ -43,23 +45,23 @@ class CremillaShell extends QueuesadillaShell
     }
 
     /**
-     * Register PID for current worker
+     * Register worker stat
      * @return void
      * 
      */
-    private function registerPid()
+    private function registerWorker()
     {
-        /**
-         * ToDo
-         * Remove from here
-         */
-        $dirPids = TMP . 'cremilla' . DS . 'pids';
-        if(!is_dir($dirPids)) {
-            mkdir($dirPids, 0777, true);
-        }
+        $workersTable = TableRegistry::get('Cremilla.CakephpCremillaWorkers', [
+            'className' => 'CriztianiX\Cremilla\Model\Table\CakephpCremillaWorkersTable'
+        ]);
 
-        $pid = getmypid();
-        $pidfile = $dirPids . DS . $pid . ".pid";
-        file_put_contents($pidfile, $pid);
+        $worker = $workersTable->newEntity([
+            "pid" => getmypid(),
+            "hostname" => gethostname()
+        ]);
+
+        if (!$workersTable->save($worker)) {
+            throw new Exception("Cannot save worker stat to database");
+        }
     }
 }
