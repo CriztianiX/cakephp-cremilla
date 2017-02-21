@@ -28,7 +28,9 @@
                 <td><?= h($cakephpCremillaLog->message) ?></td>
                 <td><?= h($cakephpCremillaLog->created) ?></td>
                 <td class="actions">
-                    <?php //$this->Html->link(__('View'), ['action' => 'view', $cakephpCremillaLog->id]) ?>
+                    <?php  /* $this->Html->link(__('View'), [
+                        'action' => 'view', $cakephpCremillaLog->id
+                    ]) */ ?>
                 </td>
             </tr>
             <?php endforeach; ?>

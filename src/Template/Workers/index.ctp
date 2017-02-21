@@ -17,6 +17,7 @@
             <th scope="col"><?= $this->Paginator->sort('id') ?></th>
             <th scope="col">PID</th>
             <th scope="col">Hostname</th>
+            <th scope="col">Status</th>
             <th scope="col"><?= $this->Paginator->sort('created') ?></th>
         </tr>
         </thead>
@@ -26,6 +27,7 @@
                 <td><?= $this->Number->format($worker->id) ?></td>
                 <td><?= h($worker->pid) ?></td>
                 <td><?= h($worker->hostname) ?></td>
+                <td><?= h(posix_getpgid($worker->pid) ? "running" : "died") ?></td>
                 <td class="actions">
                     <?php //$this->Html->link(__('View'), ['action' => 'view', $cakephpCremillaLog->id]) ?>
                 </td>

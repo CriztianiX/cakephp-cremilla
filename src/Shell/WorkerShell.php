@@ -7,7 +7,7 @@ use Josegonzalez\CakeQueuesadilla\Shell\QueuesadillaShell;
 use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
 
-class CremillaShell extends QueuesadillaShell
+class WorkerShell extends QueuesadillaShell
 {
     /**
      * Override main() to handle action

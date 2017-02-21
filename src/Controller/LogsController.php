@@ -1,10 +1,10 @@
 <?php
 namespace CriztianiX\Cremilla\Controller;
 
-use App\Controller\AppController;
+use CriztianiX\Cremilla\Controller\CremillaAppController;
 
 use Cake\ORM\TableRegistry;
-class LogsController extends AppController
+class LogsController extends CremillaAppController
 {
     public $helpers = [ 'PlumSearch.Search' ];
 
@@ -17,8 +17,7 @@ class LogsController extends AppController
 
     public function initialize()
     {
-        //parent::initialize();
-        $this->loadComponent('Paginator');
+        parent::initialize();
         $this->loadComponent('PlumSearch.Filter', [
             'parameters' => [
                 ['name' => 'type', 'className' => 'Input'],

@@ -1,24 +1,28 @@
 <?php
 namespace CriztianiX\Cremilla\Controller;
 
-use App\Controller\AppController;
+use CriztianiX\Cremilla\Controller\CremillaAppController;
 use Cake\ORM\TableRegistry;
 use CriztianiX\Cremilla\Worker\CremillaWorker;
 
-class WorkersController extends AppController
+class WorkersController extends CremillaAppController
 {
+    public $paginate = [
+        'limit' => 25,
+        'order' => [
+            'CakephpCremillaWorker.id' => 'desc'
+        ]
+    ];
+
     public function initialize()
     {
-        //parent::initialize();
+        parent::initialize();
     }
 
     public function index()
     {
-        $workersTable = TableRegistry::get('Cremilla.CakephpCremillaWorkers', [
-            'className' => 'CriztianiX\Cremilla\Model\Table\CakephpCremillaWorkersTable'
-        ]);
-
-        $workers = $workersTable->find('all');
-        $this->set(compact('workers'));
+        $repo = TableRegistry::get('CriztianiX/Cremilla.CakephpCremillaWorkers');
+        $this->set('workers', $this->Paginator->paginate($repo));
+        $this->viewBuilder()->setLayout('default');
     }
 }
