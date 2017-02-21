@@ -8,8 +8,12 @@ Log::config('cremilla', [
     'levels' => ['notice', 'info', 'debug', 'alert', 'error']
 ]);
 
+# Configure email transport to send worker's alerts
+# Using built-in Mailgun transport
 Email::setConfigTransport('cremilla', [
-    'className' => 'CriztianiX\Cremilla\Mailer\Transport\MailgunTransport'
+    'className' => 'CriztianiX\Cremilla\Mailer\Transport\MailgunTransport',
+    'domain' => getenv("MAILGUN_DOMAIN"),
+    'apiKey' => getenv("MAILGUN_API_KEY")
 ]);
 
 Plugin::load('PlumSearch');

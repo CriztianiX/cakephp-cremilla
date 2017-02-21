@@ -23,10 +23,16 @@ class WorkerObserverShell extends QueuesadillaShell
             $isAlive = CremillaWorker::isAlive($worker->pid);
 
             if(!$isAlive) {
-                echo "Handle worker died";
                 // Remove from here
                 $email = new Email();
-                $email->transport("cremilla");
+                $email->transport("cremilla")
+                    ->from('postmaster@xxx.com', 'XXXX')
+                    ->addHeaders([
+                        "subject" => "Workers died found",
+                    ])
+                    ->template('CriztianiX\Cremilla.wokers_status')
+                    ->emailFormat('text')
+                    ->send();
             }
         }
     }
