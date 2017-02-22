@@ -28,6 +28,7 @@
                 <td><?= h($worker->pid) ?></td>
                 <td><?= h($worker->hostname) ?></td>
                 <td><?= h(posix_getpgid($worker->pid) ? "running" : "died") ?></td>
+                <td><?= $worker->created ?></td>
                 <td class="actions">
                     <?php //$this->Html->link(__('View'), ['action' => 'view', $cakephpCremillaLog->id]) ?>
                 </td>

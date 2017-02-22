@@ -14,7 +14,7 @@
         }
     ],
     "require": {
-        "cakephp/cakephp": "~3.0",
+        "cakephp/cakephp": "~3.4",
         "josegonzalez/cakephp-queuesadilla": "0.4.2",
         "php": ">=5.4",
         "skie/cakephp-search": "1.0.3"

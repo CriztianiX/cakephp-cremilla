@@ -31,6 +31,7 @@ class CakephpCremillaWorkersTable extends Table
         parent::initialize($config);
 
         $this->table('cakephp_cremilla_workers');
+        $this->addBehavior('Timestamp');
         $this->displayField('id');
         $this->primaryKey('id');
     }
