@@ -4,9 +4,8 @@ namespace CriztianiX\Cremilla\Shell;
 use Josegonzalez\CakeQueuesadilla\Shell\QueuesadillaShell;
 use Cake\ORM\TableRegistry;
 use CriztianiX\Cremilla\Worker\CremillaWorker;
-
-// Remove from here
-use Cake\Mailer\Email;
+use Cake\Event\EventManager;
+use Cake\Event\Event;
 
 class WorkerObserverShell extends QueuesadillaShell
 {
@@ -19,21 +18,24 @@ class WorkerObserverShell extends QueuesadillaShell
     public function main()
     {
         $workers = $this->getWorkers();
+        $deadWorkers = [];
+
         foreach($workers as $worker) {
             $isAlive = CremillaWorker::isAlive($worker->pid);
-
             if(!$isAlive) {
-                // Remove from here
-                $email = new Email();
-                $email->transport("cremilla")
-                    ->from('postmaster@xxx.com', 'XXXX')
-                    ->addHeaders([
-                        "subject" => "Workers died found",
-                    ])
-                    ->template('CriztianiX\Cremilla.wokers_status')
-                    ->emailFormat('text')
-                    ->send();
+                $deadWorkers[] = $worker->pid;
             }
+        }
+
+        if(!empty($deadWorkers)) {
+            $eventManager = EventManager::instance();
+            $event = new Event('Cremilla.Worker.dead', $this, [
+                'data' => [
+                    'deadWorkers' => $deadWorkers
+                ]
+            ]);
+
+            $eventManager->dispatch($event);
         }
     }
 
