@@ -17,8 +17,10 @@
             <th scope="col"><?= $this->Paginator->sort('id') ?></th>
             <th scope="col">PID</th>
             <th scope="col">Hostname</th>
+            <th scope="col">Queue</t
             <th scope="col">Status</th>
             <th scope="col"><?= $this->Paginator->sort('created') ?></th>
+            <th class="actions" scope="col">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -27,10 +29,23 @@
                 <td><?= $this->Number->format($worker->id) ?></td>
                 <td><?= h($worker->pid) ?></td>
                 <td><?= h($worker->hostname) ?></td>
-                <td><?= h(posix_getpgid($worker->pid) ? "running" : "died") ?></td>
+                <td><?= h($worker->queue) ?></td>
+                <td><?php if($this->CremillaWorker->isAlive($worker->pid)): ?>
+                        Running
+                        <?php else: ?>
+                        Dead
+                    <?php endif;?>
+                </td>
                 <td><?= $worker->created ?></td>
                 <td class="actions">
-                    <?php //$this->Html->link(__('View'), ['action' => 'view', $cakephpCremillaLog->id]) ?>
+                    <?= $this->Html->link('View', ['action' => 'view', $worker->id]) ?>
+                    <?php if($this->CremillaWorker->isAlive($worker->pid)): ?>
+                        <?= $this->Form->postLink(
+                            'Stop',
+                            ['action' => 'stop', $worker->pid],
+                            ['confirm' => 'Are you sure?'])
+                        ?>
+                    <?php endif;?>
                 </td>
             </tr>
         <?php endforeach; ?>

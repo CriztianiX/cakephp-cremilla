@@ -57,7 +57,8 @@ class WorkerShell extends QueuesadillaShell
 
         $worker = $workersTable->newEntity([
             "pid" => getmypid(),
-            "hostname" => gethostname()
+            "hostname" => gethostname(),
+            'queue' => $this->params['queue']
         ]);
 
         if (!$workersTable->save($worker)) {

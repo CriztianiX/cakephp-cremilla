@@ -13,5 +13,8 @@ Router::plugin(
         $routes->connect('/workers', [
             'controller' => 'Workers', 'action' => 'index', 'plugin' => 'CriztianiX/Cremilla'
         ]);
+        
+        // Connect the conventions based default routes.
+        $routes->fallbacks();
     }
 );

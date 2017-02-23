@@ -25,4 +25,25 @@ class WorkersController extends CremillaAppController
         $this->set('workers', $this->Paginator->paginate($repo));
         $this->viewBuilder()->setLayout('default');
     }
+
+    public function add()
+    {
+        
+    }
+
+    public function stop($pid)
+    {
+        $this->request->allowMethod(['post', 'delete']);
+
+        if ($this->request->is(['post', 'put'])) {
+
+            if (posix_kill($pid, 15)) {
+                $this->Flash->success(__('Your worker has been stopped.'));
+                return $this->redirect(['action' => 'index']);
+            }
+
+            $this->Flash->error(__('Unable to stop your worker.'));
+            return $this->redirect(['action' => 'index']);
+        }
+    }
 }
