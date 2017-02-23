@@ -6,7 +6,11 @@
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Search') ?></li>
-        <?php //$this->element('CrizSearch'); ?>
+    </ul>
+
+    <ul class="side-nav">
+        <li class="heading"><?= __('Actions') ?></li>
+        <li><?= $this->Html->link('New', ['action' => 'add']) ?></li>
     </ul>
 </nav>
 <div class="cakephpCremillaLogs index large-9 medium-8 columns content">
@@ -17,7 +21,7 @@
             <th scope="col"><?= $this->Paginator->sort('id') ?></th>
             <th scope="col">PID</th>
             <th scope="col">Hostname</th>
-            <th scope="col">Queue</t
+            <th scope="col">Queue</th>
             <th scope="col">Status</th>
             <th scope="col"><?= $this->Paginator->sort('created') ?></th>
             <th class="actions" scope="col">Actions</th>

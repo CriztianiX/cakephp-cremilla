@@ -4,6 +4,7 @@ namespace CriztianiX\Cremilla\Controller;
 use CriztianiX\Cremilla\Controller\CremillaAppController;
 use Cake\ORM\TableRegistry;
 use CriztianiX\Cremilla\Worker\CremillaWorker;
+use CriztianiX\Cremilla\Form\CakephpCremillaWorkersForm;
 
 class WorkersController extends CremillaAppController
 {
@@ -28,7 +29,18 @@ class WorkersController extends CremillaAppController
 
     public function add()
     {
-        
+        $cakephpCremillaWorker = new CakephpCremillaWorkersForm();
+
+        if ($this->request->is('post')) {
+            if ($cakephpCremillaWorker->execute($this->request->getData())) {
+                $this->Flash->success('Worker created successfully.');
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error('There was a problem submitting your form.');
+            }
+        }
+
+        $this->set(compact('cakephpCremillaWorker'));
     }
 
     public function stop($pid)
