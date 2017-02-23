@@ -12,7 +12,7 @@ $ bin/cake Migrations migrate -p CriztianiX/Cremilla
 
 ## Running worker
 ```bash
-$ bin/cake CriztianiX/Cremilla.Worker
+$ bin/cake CriztianiX/Cremilla.Worker --queue default --logger cremilla
 ```
 
 ## Running observer's workers
@@ -21,3 +21,9 @@ $ bin/cake CriztianiX/Cremilla.Worker
 MAILGUN_DOMAIN="" MAILGUN_API_KEY="" EMAIL_FROM_DOMAIN="postmaster@domain.com" \
 EMAIL_FROM_NAME="Cremilla Alert" EMAIL_TO="sysadmin@localhost.com" bin/cake CriztianiX/Cremilla.worker_observer
 ```
+
+## Workers Status
+[logo]: https://raw.githubusercontent.com/CriztianiX/cakephp-cremilla/master/doc/img/Workers.PNG "Workers"
+
+## Jobs
+[logo]: https://raw.githubusercontent.com/CriztianiX/cakephp-cremilla/master/doc/img/Logs.PNG "Jobs"
