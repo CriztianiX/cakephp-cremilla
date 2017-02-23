@@ -23,7 +23,10 @@ EMAIL_FROM_NAME="Cremilla Alert" EMAIL_TO="sysadmin@localhost.com" bin/cake Criz
 ```
 
 ## Workers Status
-[logo]: https://raw.githubusercontent.com/CriztianiX/cakephp-cremilla/master/doc/img/Workers.PNG "Workers"
+#### /cremilla/workers
+![alt tag](https://raw.githubusercontent.com/CriztianiX/cakephp-cremilla/master/doc/img/Workers.PNG)
 
-## Jobs
-[logo]: https://raw.githubusercontent.com/CriztianiX/cakephp-cremilla/master/doc/img/Logs.PNG "Jobs"
+## Jobs Status
+#### /cremilla/logs
+
+![alt tag](https://raw.githubusercontent.com/CriztianiX/cakephp-cremilla/master/doc/img/Logs.PNG)
