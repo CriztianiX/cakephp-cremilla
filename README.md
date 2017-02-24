@@ -11,6 +11,7 @@ $ bin/cake Migrations migrate -p CriztianiX/Cremilla
 ```
 
 ## Running worker
+#### Notice, this worker cannot be stopped from UI
 ```bash
 $ bin/cake CriztianiX/Cremilla.Worker --queue default --logger cremilla
 ```
@@ -21,6 +22,9 @@ $ bin/cake CriztianiX/Cremilla.Worker --queue default --logger cremilla
 MAILGUN_DOMAIN="" MAILGUN_API_KEY="" EMAIL_FROM_DOMAIN="postmaster@domain.com" \
 EMAIL_FROM_NAME="Cremilla Alert" EMAIL_TO="sysadmin@localhost.com" bin/cake CriztianiX/Cremilla.worker_observer
 ```
+
+## Adding Workers from UI
+#### /cremilla/add
 
 ## Workers Status
 #### /cremilla/workers
