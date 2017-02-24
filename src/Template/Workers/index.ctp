@@ -22,6 +22,8 @@
             <th scope="col">Hostname</th>
             <th scope="col">Queue</th>
             <th scope="col">Status</th>
+            <th scope="col">Jobs Success</th>
+            <th scope="col">Jobs Failed</th>
             <th scope="col"><?= $this->Paginator->sort('created') ?></th>
             <th class="actions" scope="col">Actions</th>
         </tr>
@@ -39,6 +41,8 @@
                         Dead
                     <?php endif;?>
                 </td>
+                <td><?= $worker->jobs_success ?></td>
+                <td><?= $worker->jobs_failed ?></td>
                 <td><?= $worker->created ?></td>
                 <td class="actions">
                     <?= $this->Html->link('View', ['action' => 'view', $worker->id]) ?>

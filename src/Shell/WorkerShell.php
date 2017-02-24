@@ -7,6 +7,9 @@ use Josegonzalez\CakeQueuesadilla\Shell\QueuesadillaShell;
 use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
 
+use Cake\Event\EventManager;
+use Cake\Event\Event;
+
 class WorkerShell extends QueuesadillaShell
 {
     /**
@@ -20,7 +23,6 @@ class WorkerShell extends QueuesadillaShell
         $logger = Log::engine($this->params['logger']);
         $engine = $this->getEngine($logger);
         $worker = $this->getWorker($engine, $logger);
-        $this->registerWorker();
         $worker->work();
     }
 
@@ -33,21 +35,39 @@ class WorkerShell extends QueuesadillaShell
      */
     public function getWorker($engine, $logger)
     {
+        $workerId = $this->registerWorker();
         $worker = parent::getWorker($engine, $logger);
-        $worker->attachListener('Worker.job.success', function ($event) {
+        $worker->attachListener('Worker.job.success', function ($event) use ($workerId) {
+            $event = new Event('Cremilla.Worker.Job.success', $this, [
+                'data' => [
+                    'workerId' => $workerId
+                ]
+            ]);
+            $this->dispatchEvent($event);
             ConnectionManager::get('default')->disconnect();
         });
-        $worker->attachListener('Worker.job.failure', function ($event) {
+        $worker->attachListener('Worker.job.failure', function ($event) use ($workerId) {
+            $event = new Event('Cremilla.Worker.Job.failed', $this, [
+                'data' => [
+                    'workerId' => $workerId
+                ]
+            ]);
+            $this->dispatchEvent($event);
             ConnectionManager::get('default')->disconnect();
         });
 
         return $worker;
     }
 
+    private function dispatchEvent( \Cake\Event\Event $event)
+    {
+        $eventManager = EventManager::instance();
+        return $eventManager->dispatch($event);
+    }
+
     /**
-     * Register worker stat
-     * @return void
-     * 
+     * Register worker in database
+     *
      */
     private function registerWorker()
     {
@@ -64,5 +84,7 @@ class WorkerShell extends QueuesadillaShell
         if (!$workersTable->save($worker)) {
             throw new Exception("Cannot save worker stat to database");
         }
+
+        return $worker->id;
     }
 }
