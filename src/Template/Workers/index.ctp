@@ -18,7 +18,6 @@
     <table cellpadding="0" cellspacing="0">
         <thead>
         <tr>
-            <th scope="col"><?= $this->Paginator->sort('id') ?></th>
             <th scope="col">PID</th>
             <th scope="col">Hostname</th>
             <th scope="col">Queue</th>
@@ -30,11 +29,11 @@
         <tbody>
         <?php foreach ($workers as $worker): ?>
             <tr>
-                <td><?= $this->Number->format($worker->id) ?></td>
                 <td><?= h($worker->pid) ?></td>
                 <td><?= h($worker->hostname) ?></td>
                 <td><?= h($worker->queue) ?></td>
-                <td><?php if($this->CremillaWorker->isAlive($worker->pid)): ?>
+                <td>
+                    <?php if($this->CremillaWorker->isAlive($worker->pid)): ?>
                         Running
                         <?php else: ?>
                         Dead
