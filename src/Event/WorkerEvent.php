@@ -10,18 +10,24 @@ class WorkerEvent implements EventListenerInterface
     public function implementedEvents()
     {
         return [
+            'Cremilla.Worker.alive' => 'regiterTimestampAlive',
             'Cremilla.Worker.dead' => 'sendNotificationWorkerDead',
             'Cremilla.Worker.Job.failed' => 'incrementFailedJob',
             'Cremilla.Worker.Job.success' => 'incrementSuccessJob',
         ];
     }
 
+    public function regiterTimestampAlive($event, $data)
+    {
+        return $this->getWorkersTable()->updateAll(
+            [ 'observed_at' => date('Y-m-d H:i:s')],
+            [ 'id IN' => $data["aliveWorkers"] ]
+        ); 
+    }
+
     public function incrementFailedJob($event, $data)
     {
-        $workersTable = TableRegistry::get('Cremilla.CakephpCremillaWorkers', [
-            'className' => 'CriztianiX\Cremilla\Model\Table\CakephpCremillaWorkersTable'
-        ]);
-
+        $workersTable = $this->getWorkersTable();
         $worker = $workersTable->get($data["workerId"]);
         $worker->jobs_failed = $worker->jobs_failed + 1;
 
@@ -30,10 +36,7 @@ class WorkerEvent implements EventListenerInterface
 
     public function incrementSuccessJob($event, $data)
     {
-        $workersTable = TableRegistry::get('Cremilla.CakephpCremillaWorkers', [
-            'className' => 'CriztianiX\Cremilla\Model\Table\CakephpCremillaWorkersTable'
-        ]);
-
+        $workersTable = $this->getWorkersTable();
         $worker = $workersTable->get($data["workerId"]);
         $worker->jobs_success = $worker->jobs_success + 1;
 
@@ -51,5 +54,12 @@ class WorkerEvent implements EventListenerInterface
             ->emailFormat('text')
             ->viewVars($data)
             ->send();
+    }
+
+    private function getWorkersTable()
+    {
+        return TableRegistry::get('Cremilla.CakephpCremillaWorkers', [
+            'className' => 'CriztianiX\Cremilla\Model\Table\CakephpCremillaWorkersTable'
+        ]);
     }
 }

@@ -6,6 +6,7 @@ use Cake\ORM\TableRegistry;
 use CriztianiX\Cremilla\Worker\CremillaWorker;
 use Cake\Event\EventManager;
 use Cake\Event\Event;
+use Cake\Core\Configure;
 
 class WorkerObserverShell extends QueuesadillaShell
 {
@@ -19,23 +20,39 @@ class WorkerObserverShell extends QueuesadillaShell
     {
         $workers = $this->getWorkers();
         $deadWorkers = [];
+        $aliveWorkers = [];
 
         foreach($workers as $worker) {
             $isAlive = CremillaWorker::isAlive($worker->pid);
             if(!$isAlive) {
                 $deadWorkers[] = $worker->pid;
+            }else{
+                $aliveWorkers[] = $worker->id;
             }
         }
 
-        if(!empty($deadWorkers)) {
+        if(!empty($aliveWorkers)) {
             $eventManager = EventManager::instance();
-            $event = new Event('Cremilla.Worker.dead', $this, [
+            $event = new Event('Cremilla.Worker.alive', $this, [
                 'data' => [
-                    'deadWorkers' => $deadWorkers
+                    'aliveWorkers' => $aliveWorkers
                 ]
             ]);
 
             $eventManager->dispatch($event);
+        }
+
+        if(!empty($deadWorkers)) {
+            if(Configure::read("Cremilla.Workers.notify_dead") === true) {
+                $eventManager = EventManager::instance();
+                $event = new Event('Cremilla.Worker.dead', $this, [
+                    'data' => [
+                        'deadWorkers' => $deadWorkers
+                    ]
+                ]);
+
+                $eventManager->dispatch($event);
+            }
         }
     }
 
