@@ -32,26 +32,22 @@ class WorkerObserverShell extends QueuesadillaShell
         }
 
         if(!empty($aliveWorkers)) {
-            $eventManager = EventManager::instance();
             $event = new Event('Cremilla.Worker.alive', $this, [
                 'data' => [
                     'aliveWorkers' => $aliveWorkers
                 ]
             ]);
-
-            $eventManager->dispatch($event);
+            $this->dispatchEvent($event);
         }
 
         if(!empty($deadWorkers)) {
-            if(Configure::read("Cremilla.Workers.notify_dead") === true) {
-                $eventManager = EventManager::instance();
+            if($this->shouldNotifyWorkersDead(count($aliveWorkers)))  {
                 $event = new Event('Cremilla.Worker.dead', $this, [
                     'data' => [
                         'deadWorkers' => $deadWorkers
                     ]
                 ]);
-
-                $eventManager->dispatch($event);
+                $this->dispatchEvent($event);
             }
         }
     }
@@ -60,9 +56,27 @@ class WorkerObserverShell extends QueuesadillaShell
      * Retrieves workers list
      *
      */
-    public function getWorkers()
+    private function getWorkers()
     {
         $repo = TableRegistry::get('CriztianiX/Cremilla.CakephpCremillaWorkers');
         return $repo->find('all');  
+    }
+
+    protected function shouldNotifyWorkersDead($aliveWorkers)
+    {
+        $notifyDead = Configure::read("Cremilla.Workers.notify_dead");
+        $lessThan = Configure::read("Cremilla.Workers.notify_less_than");
+
+        if($notifyDead && $lessThan > $aliveWorkers) {
+            return true;
+        }
+
+        return false;
+    }
+
+    protected function dispatchEvent($event)
+    {
+        $eventManager = EventManager::instance();
+        return $eventManager->dispatch($event);
     }
 }

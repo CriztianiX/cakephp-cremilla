@@ -6,7 +6,8 @@ use Cake\Mailer\Email;
 use Cake\Event\EventManager;
 use CriztianiX\Cremilla\Event\WorkerEvent;
 
-Configure::write("Cremilla.Workers.notify_dead", false);
+Configure::write("Cremilla.Workers.notify_dead", true);
+Configure::write("Cremilla.Workers.notify_less_than", 1);
 
 Log::config('cremilla', [
     'className' => 'CriztianiX\Cremilla\Log\Engine\CremillaLog',
