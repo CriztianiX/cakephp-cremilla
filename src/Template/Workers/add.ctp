@@ -14,6 +14,10 @@
     <fieldset>
         <legend><?= __('Add Cakephp Cremilla Worker') ?></legend>
         <?= $this->Form->control('queue'); ?>
+        <?= $this->Form->control('logger', [
+            'type' => 'select',
+            'options' => [ 'stdout'  => 'stdout', 'cremilla' => 'cremilla' ]
+        ]); ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>

@@ -75,11 +75,14 @@ class WorkerShell extends QueuesadillaShell
             'className' => 'CriztianiX\Cremilla\Model\Table\CakephpCremillaWorkersTable'
         ]);
 
-        $worker = $workersTable->newEntity([
+        $data = [
             "pid" => getmypid(),
             "hostname" => gethostname(),
-            'queue' => $this->params['queue']
-        ]);
+            'queue' => $this->params['queue'],
+            'logger' => $this->params['logger']
+        ];
+
+        $worker = $workersTable->newEntity($data);
 
         if (!$workersTable->save($worker)) {
             throw new Exception("Cannot save worker stat to database");

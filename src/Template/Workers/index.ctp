@@ -21,6 +21,7 @@
             <th scope="col">PID</th>
             <!-- <th scope="col">Hostname</th> -->
             <th scope="col">Queue</th>
+            <th scope="col">Logger</th>
             <th scope="col">Status</th>
             <th scope="col">Started At</th>            
             <th scope="col">Observed At</th>
@@ -35,6 +36,7 @@
                 <td><?= h($worker->pid) ?></td>
                 <!-- <td><?= h($worker->hostname) ?></td> -->
                 <td><?= h($worker->queue) ?></td>
+                <td><?= h($worker->logger) ?></td>
                 <td>
                     <?php if($this->CremillaWorker->isAlive($worker->pid)): ?>
                         Running

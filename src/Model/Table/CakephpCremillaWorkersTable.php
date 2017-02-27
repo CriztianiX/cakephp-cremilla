@@ -57,6 +57,10 @@ class CakephpCremillaWorkersTable extends Table
             ->requirePresence('hostname', 'create')
             ->notEmpty('hostname');
 
+        $validator
+            ->requirePresence('logger', 'create')
+            ->inList('logger', ['stdout', 'cremilla']);
+
         return $validator;
     }
 }

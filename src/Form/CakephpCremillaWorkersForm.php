@@ -42,10 +42,12 @@ class CakephpCremillaWorkersForm extends Form
     {
         $cakeBin = APP . '..' .  DS . 'bin' . DS . 'cake CriztianiX/Cremilla.worker';
         $queue = $data['queue'] ?? 'default';
+        $logger = $data['logger'] ?? 'stdout';
 
         $args = [
             $cakeBin,
             "--queue " . $queue,
+            "--logger " . $logger,
             "> /dev/null 2>/dev/null &"
         ];
 
