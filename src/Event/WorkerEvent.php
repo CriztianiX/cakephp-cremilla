@@ -25,6 +25,14 @@ class WorkerEvent implements EventListenerInterface
         ); 
     }
 
+    public function regiterWorkersNotified($ids)
+    {
+        return $this->getWorkersTable()->updateAll(
+            [ 'notified' => true],
+            [ 'id IN' => $ids ]
+        ); 
+    }
+
     public function incrementFailedJob($event, $data)
     {
         $workersTable = $this->getWorkersTable();
@@ -45,6 +53,10 @@ class WorkerEvent implements EventListenerInterface
 
     public function sendNotificationWorkerDead($event, $data)
     {
+        $ids = array_map(function($worker) {
+            return $worker->id;
+        }, $data["deadWorkers"] );
+
         $email = new Email();
         $email->transport("cremilla")
             ->from(getenv("EMAIL_FROM_DOMAIN"), getenv("EMAIL_FROM_NAME"))
@@ -54,6 +66,7 @@ class WorkerEvent implements EventListenerInterface
             ->emailFormat('text')
             ->viewVars($data)
             ->send();
+        $this->regiterWorkersNotified($ids);
     }
 
     private function getWorkersTable()

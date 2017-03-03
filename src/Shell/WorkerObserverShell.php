@@ -25,7 +25,7 @@ class WorkerObserverShell extends QueuesadillaShell
         foreach($workers as $worker) {
             $isAlive = CremillaWorker::isAlive($worker->pid);
             if(!$isAlive) {
-                $deadWorkers[] = $worker->pid;
+                $deadWorkers[] = $worker;
             }else{
                 $aliveWorkers[] = $worker->id;
             }
@@ -59,7 +59,7 @@ class WorkerObserverShell extends QueuesadillaShell
     private function getWorkers()
     {
         $repo = TableRegistry::get('CriztianiX/Cremilla.CakephpCremillaWorkers');
-        return $repo->find('all');  
+        return $repo->find()->where(["notified" => false]);  
     }
 
     protected function shouldNotifyWorkersDead($aliveWorkers)
